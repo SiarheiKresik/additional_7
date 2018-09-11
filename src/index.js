@@ -1,21 +1,21 @@
 module.exports = function solveSudoku(matrix) {
   // matrix: 9x9
-  var arr = matrixToArray(matrix);
+  const arr = matrixToArray(matrix);
   solver(arr);
-  solved = arrayToMatrix(arr);
+  const solved = arrayToMatrix(arr);
   return solved;
 };
 
 function solver(grid) {
   // return if there are no more zeros
-  var i = grid.indexOf(0);
+  const i = grid.indexOf(0);
   if (i == -1) {
     return true;
   }
-  var candidates = getCandidates(i, grid);
+  const candidates = getCandidates(i, grid);
   if (candidates !== null) {
     // try for each candidate
-    for (var c = 0; c < candidates.length; c++) {
+    for (let c = 0; c < candidates.length; c++) {
       grid[i] = candidates[c];
       // go deeper
       if (solver(grid)) {
@@ -31,9 +31,9 @@ function solver(grid) {
 
 function getCandidates(i, arr) {
   // return posible values for a cell or null
-  var excluded_numbers = getExcludedNumber(i, arr);
-  var candidates = [];
-  for (var i = 1; i < 10; i++) {
+  const excluded_numbers = getExcludedNumber(i, arr);
+  const candidates = [];
+  for (let i = 1; i < 10; i++) {
     if (excluded_numbers.has(i)) continue;
     candidates.push(i);
   }
@@ -45,8 +45,8 @@ function getCandidates(i, arr) {
 
 function getExcludedNumber(i, arr) {
   // get numbers that can't be in a cell
-  var excluded_numbers = new Set();
-  for (var j = 0; j < 81; j++) {
+  const excluded_numbers = new Set();
+  for (let j = 0; j < 81; j++) {
     if (sameRow(i, j) || sameCol(i, j) || sameSquare(i, j)) {
       excluded_numbers.add(arr[j]);
     }
@@ -70,13 +70,13 @@ function sameSquare(i, j) {
 }
 
 function matrixToArray(matrix) {
-  var arr = [];
-  for (row of matrix) for (e of row) arr.push(e);
+  const arr = [];
+  for (const row of matrix) for (const e of row) arr.push(e);
   return arr;
 }
 
 function arrayToMatrix(arr) {
-  var matrix = [];
+  const matrix = [];
   while (arr.length) {
     matrix.push(arr.splice(0, 9));
   }
